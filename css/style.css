@@ -1,0 +1,4 @@
+.canvas {
+    overflow-x: scroll;
+    border: 1px solid lightgray;
+}

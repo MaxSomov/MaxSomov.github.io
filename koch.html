@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Кривая Коха</title>
+    <!-- Latest compiled and minified CSS -->
+    <!--todo скачать!-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+
+<nav class="navbar navbar-default ">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Фракталы</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Кривая Коха</a></li>
+                <li><a href="#about">Множество Мандельброта</a></li>
+                <li><a href="#contact">Множество Ляпунова</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Кривая Коха</h1>
+    <div class="alert alert-info">
+        Кривая Коха является типичным геометрическим фракталом. Процесс её построения выглядит следующим образом: берём
+        единичный отрезок, разделяем на три равные части и заменяем средний интервал равносторонним треугольником без
+        этого сегмента. В результате образуется ломаная, состоящая из четырёх звеньев длины 1/3. На следующем шаге
+        повторяем операцию для каждого из четырёх получившихся звеньев и т. д… Предельная кривая и есть кривая Коха.
+    </div>
+    <div class="row">
+        <div class="settings col-md-2">
+            <form>
+                <fieldset>
+                    <legend>Настройки</legend>
+                    <div class="form-group">
+                        <label for="size">Размер</label>
+                        <input type="number" class="form-control" id="size" value="800" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="size">Количество итераций</label>
+                        <input type="number" class="form-control" id="iterations" value="0" min="0">
+                    </div>
+                </fieldset>
+
+            </form>
+        </div>
+
+        <div class="canvas col-md-10">
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
+</div>
+
+</main>
+
+<script src="js/koch.js"></script>
+</body>
+</html>
