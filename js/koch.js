@@ -1,8 +1,8 @@
-function Koch(size, iterations) {
-//todo Выбор цвета
-//todo цвета зависит от отерации
-//todo передача размеров в конструктор
-//todo толщина линии
+function Koch(size, iterations, color) {
+// todo Выбор цвета
+// todo цвета зависит от отерации
+// todo передача размеров в конструктор
+// todo толщина линии
 
     var COS_60 = 0.5,
         SIN_60 = -0.866;
@@ -19,6 +19,8 @@ function Koch(size, iterations) {
             pointC = {},
             pointD = {},
             pointE = endPoint;
+
+        ctx.strokeStyle = color;
 
         if (iterations === 0) {
             ctx.beginPath();
@@ -54,6 +56,7 @@ function Koch(size, iterations) {
     }
 
     this.draw = function () {
+        // ctx.strokeStyle = color;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawKoch(startPoint, endPoint, iterations);
     }
@@ -76,6 +79,14 @@ function Koch(size, iterations) {
         }
     }
 
+    this.color = function (value) {
+        if(!arguments.length){
+            return color;
+        } else {
+            color = value;
+        }
+    }
+
     //CONSTRUCTOR
     this.size(size);
 }
@@ -84,8 +95,9 @@ var iterations = document.getElementById('iterations');
 var width = document.getElementById('width');
 var height = document.getElementById('height');
 var size = document.getElementById('size');
+var color = document.getElementById('color');
 
-var fractal = new Koch(+size.value, +iterations.value);
+var fractal = new Koch(+size.value, +iterations.value, color.value);
 fractal.draw();
 
 iterations.onchange = function () {
@@ -95,6 +107,11 @@ iterations.onchange = function () {
 
 size.onchange = function () {
     fractal.size(+size.value);
+    fractal.draw();
+}
+
+color.onchange = function () {
+    fractal.color(color.value);
     fractal.draw();
 }
 
