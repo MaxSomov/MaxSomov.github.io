@@ -1,8 +1,12 @@
+/**
+ * @class Класс фрактала
+ *
+ * @param size {number} Ширина изображения. Высота определяется автоматически.
+ * @param iterations {number} Количество итераций
+ * @param color {string} Цвет линии
+ * @constructor
+ */
 function Koch(size, iterations, color) {
-// todo Выбор цвета
-// todo цвета зависит от отерации
-// todo передача размеров в конструктор
-// todo толщина линии
 
     var COS_60 = 0.5,
         SIN_60 = -0.866;
@@ -13,7 +17,24 @@ function Koch(size, iterations, color) {
     var startPoint = {},
         endPoint = {};
 
+    /**
+     * @description Рекурсивная функция рисования кривой
+     *
+     * @param startPoint {Object} Начальная точка отрезка
+     * @param endPoint {Object} Конечная точка отрезка
+     * @param iterations {number} Количество итераций
+     */
     var drawKoch = function (startPoint, endPoint, iterations) {
+
+        /**
+         *
+         * @type {Object} Точки кривой
+         *
+         *      C
+         *     / \
+         * A--B   D--E
+         *
+         */
         var pointA = startPoint,
             pointB = {},
             pointC = {},
@@ -22,6 +43,7 @@ function Koch(size, iterations, color) {
 
         ctx.strokeStyle = color;
 
+        // Если количество итераций равно 0, рисуется прямая линия, иначе вычисляются значения промежуточных точек и рекурсивно вызывается функция для каждого отрезка с iteration-1
         if (iterations === 0) {
             ctx.beginPath();
             ctx.moveTo(pointA.x, pointA.y);
@@ -42,9 +64,12 @@ function Koch(size, iterations, color) {
             drawKoch(pointC, pointD, iterations - 1);
             drawKoch(pointD, pointE, iterations - 1);
         }
-    }
+    };
 
-    var updateSize = function () {
+    /**
+     * @description Обновление координат начальной и конечной точек при изменении размера изображения
+     */
+    var updatePoints = function () {
         startPoint = {
             x: 0,
             y: canvas.height - 1
@@ -53,47 +78,67 @@ function Koch(size, iterations, color) {
             x: canvas.width,
             y: canvas.height - 1
         };
-    }
+    };
 
+    /**
+     * @description Очищает канвас и рисует изображение
+     */
     this.draw = function () {
-        // ctx.strokeStyle = color;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawKoch(startPoint, endPoint, iterations);
-    }
+    };
 
+    /**
+     * @description Изменяет количество итераций
+     *
+     * @param i {number} Новое значение количества итераций
+     * @returns {number} Возвращает текущее количество итераций, если в функцию не передавать аргументы
+     */
     this.iterations = function (i) {
         if (!arguments.length) {
             return iterations;
         } else {
             iterations = i;
         }
-    }
+    };
 
+
+    /**
+     * Изменение размеров изображения
+     *
+     * @param value {number} Новое значение ширины изображения.
+     * @returns {number} Возвращает ширину изображения, если в функцию не передавать аргументы
+     */
     this.size = function (value) {
         if (!arguments.length) {
             return canvas.width;
         } else {
             canvas.width = value;
             canvas.height = value / 3;
-            updateSize();
+            updatePoints();
         }
-    }
+    };
 
+    /**
+     * Изменяет цвет кривой
+     *
+     * @param value {string} Новое hex значение цвета
+     * @returns {number} Возвращает текущий цвет кривой, если в функцию не передавать аргументы
+     */
     this.color = function (value) {
         if(!arguments.length){
             return color;
         } else {
             color = value;
         }
-    }
+    };
 
-    //CONSTRUCTOR
+
+
     this.size(size);
 }
 
 var iterations = document.getElementById('iterations');
-var width = document.getElementById('width');
-var height = document.getElementById('height');
 var size = document.getElementById('size');
 var color = document.getElementById('color');
 
@@ -103,15 +148,15 @@ fractal.draw();
 iterations.onchange = function () {
     fractal.iterations(+iterations.value);
     fractal.draw();
-}
+};
 
 size.onchange = function () {
     fractal.size(+size.value);
     fractal.draw();
-}
+};
 
 color.onchange = function () {
     fractal.color(color.value);
     fractal.draw();
-}
+};
 

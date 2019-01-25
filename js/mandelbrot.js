@@ -1,3 +1,6 @@
+/**
+ * @description Сброс в начальные значения
+ */
 function reset() {
     document.getElementById('width').value = 500;
     document.getElementById('height').value = 500;
@@ -9,6 +12,9 @@ function reset() {
     document.getElementById('factor').value = '1e0';
 }
 
+/**
+ * @description Увеличение масштаба
+ */
 function increase() {
     var value = Number(document.getElementById('factor').value);
     var cW = document.getElementById('cW');
@@ -16,6 +22,9 @@ function increase() {
     drawFractal();
 }
 
+/**
+ * Уменьшение масштаба
+ */
 function decrease() {
     var value = Number(document.getElementById('factor').value);
     var cW = document.getElementById('cW');
@@ -23,6 +32,11 @@ function decrease() {
     drawFractal();
 }
 
+/**
+ * @description Перемещение центра изображения
+ *
+ * @param direction {string} Направление перемещения
+ */
 function move(direction) {
     var step = Number(document.getElementById('factor').value);
     var cX, cY;
@@ -47,26 +61,43 @@ function move(direction) {
     drawFractal();
 }
 
+
+/**
+ * @description Отрисовка фрактала
+ */
 function drawFractal() {
-    //canvas element & painting context
     var fractalCanvas = document.getElementById('canvas');
     var ctx = fractalCanvas.getContext('2d');
 
-    //center coordinates & width
-    var cX = Number(document.getElementById('cX').value);
-    var cY = Number(document.getElementById('cY').value);
-    var cW = Number(document.getElementById('cW').value);
+    /**
+     * X-координата центра изображения
+     * @type {number}
+     */
+    var centerX = Number(document.getElementById('cX').value);
 
-    var Cre_start = cX - cW/2,
-        Cre_finish = cX + cW/2,
-        Cim_start = cY - cW/2,
-        Cim_finish = cY + cW/2;
+    /**
+     * Y-координата центра изображения
+     * @type {number}
+     */
+    var centerY = Number(document.getElementById('cY').value);
 
-    //screen size
+    /**
+     * Масштаб
+     * @type {number}
+     */
+    var centerWidth = Number(document.getElementById('cW').value);
+
+    // Вычисление мнимой и действительной частей
+    var Cre_start = centerX - centerWidth/2,
+        Cre_finish = centerX + centerWidth/2,
+        Cim_start = centerY - centerWidth/2,
+        Cim_finish = centerY + centerWidth/2;
+
+    //Размеры изоюражения
     var scr_x = 500,
         scr_y = 500;
 
-    //iteration count
+    //Количество итераций
     var depth = 512;
 
     var tmp;
@@ -136,6 +167,8 @@ function drawFractal() {
             }
         }
     }
+
+    // Отрисовка перекрестья в центре изображения
     if (document.getElementById('aim').checked === true){
         ctx.beginPath();
         ctx.moveTo(scr_x/2,0);
